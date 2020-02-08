@@ -38,14 +38,14 @@ public class PolynomialMultiplication {
         aOdd = (ArrayList) IntStream.range(0, vector.size()).filter(i ->  i % 2 == 1).mapToObj(vector::get).collect(Collectors.toList());
         List aResultEven = fft(aEven);
         List aResultOdd = fft(aOdd);
-
-        for(int k=0; k< (n/2)-1; k++){
-            double v1 = (double) aResultEven.get(k);
-            double v2 = (double) aResultOdd.get(k);
-            Complex v3 = new Complex(v2);
-            resultVector.add(k,(v3.multiply(w)).add(v1));
+        int k=0;
+        do{
+            Complex v1 = (Complex) aResultEven.get(k);
+            Complex v2 = (Complex) aResultOdd.get(k);
+            resultVector.add(k,(v2.multiply(w)).add(v1));
             w = Wn.multiply(w);
-        }
+            k++;
+        }while (k<(n/2)-1);
         return resultVector;
     }
 }
