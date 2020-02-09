@@ -27,16 +27,16 @@ public class PolynomialMultiplication {
         List<Complex> fftList1 = fft(a1);
         List<Complex> fftList2 =  fft(a2);
         List<Complex> resultMultiply = multiplyInputs(fftList1,fftList2);
-//        System.out.println(resultMultiply);
         List<Complex> finalResult = ifft(resultMultiply);
         ArrayList<Integer> result = new ArrayList<>();
         for(int i=0;i<finalResult.size();i++){
             result.add((int) Math.round(finalResult.get(i).getReal()/finalResult.size()));
         }
         finish=System.nanoTime();
-        System.out.println("time taken for fft multiplication " + TimeUnit.NANOSECONDS.toMillis(finish-start));
         String r=calculateResult(result);
         System.out.println(r);
+        System.out.println("time taken for fft multiplication " + TimeUnit.NANOSECONDS.toMillis(finish-start));
+
     }
 
     private static List<Complex> multiplyInputs(List<Complex> fftList1, List<Complex> fftList2) {
