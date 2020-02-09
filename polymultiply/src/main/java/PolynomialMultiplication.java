@@ -33,7 +33,6 @@ public class PolynomialMultiplication {
         for(int i=0;i<finalResult.size();i++){
             result.add((int) Math.round(finalResult.get(i).getReal()/finalResult.size()));
         }
-        //System.out.println(finalResult);
         finish=System.nanoTime();
         System.out.println("time taken for fft multiplication " + TimeUnit.NANOSECONDS.toMillis(finish-start));
         String r=calculateResult(result);
@@ -118,16 +117,21 @@ public class PolynomialMultiplication {
         StringBuilder result= new StringBuilder();
         StringUtils.leftPad(result.toString(),finalResult.size());
         int carry=0;
-        for(int i=finalResult.size()-1;i>0;i--) {
+        for(int i=finalResult.size()-1;i>=0;i--) {
             if (finalResult.get(i) != 0) {
                 if (result.toString().isEmpty()) {
                     int t = finalResult.get(i) % 10;
                     result.insert(0, t);
                 }
-                int sum = finalResult.get(i) / 10 + finalResult.get(i - 1) % 10 + carry;
-                carry = sum > 9 ? 1 : 0;
-                result.insert(0, sum % 10);
-
+                if (i != 0) {
+                    int sum = finalResult.get(i) / 10 + finalResult.get(i - 1) % 10 + carry;
+                    carry = sum > 9 ? sum/10 : 0;
+                    result.insert(0, sum % 10);
+                }
+            }
+            if(i==0){
+                int sum= finalResult.get(i)/10+carry;
+                result.insert(0,sum);
             }
         }
         return result.toString();
